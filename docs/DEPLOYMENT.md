@@ -48,3 +48,18 @@ Submission evidence must distinguish transaction lifecycle state. Only record a 
 
 Every transaction in the table above was independently rechecked through the
 Studionet explorer API and reported `FINALIZED`.
+
+## Informational tooling notes
+
+- `genvm-linter==0.11.0` defaulted to the latest cached v0.6.0 release-candidate
+  archive, which does not contain the contract's pinned stable SDK hash. The
+  semantic checks were therefore run with `GENVMROOT` pointed at the cached
+  stable v0.2.16 SDK; both contracts passed. This was a linter artifact-selection
+  issue, not a contract diagnostic.
+- GenLayer CLI 0.39.1 printed a deprecation notice for its internal
+  `initializeConsensusSmartContract()` call. Deployment and receipt retrieval
+  still completed successfully.
+- The core deployment's initial gas-estimation request received a transient HTML
+  gateway response; the CLI used its documented fallback gas limit. The exact
+  deployment transaction subsequently reached `FINALIZED` with successful
+  execution.
