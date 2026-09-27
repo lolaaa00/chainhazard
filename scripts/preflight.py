@@ -120,7 +120,7 @@ def main() -> int:
 
     readme = text(ROOT / "README.md")
     ok("no frontend" in readme.lower(), "README must make primitive boundary explicit")
-    ok("0x64DbC1429Cc698a59DA8331e44543c04c32cF0c1" in readme, "README must identify finalized core deployment")
+    ok("0x836226b0BC083384fee8F483C82Fa44605FE5f91" in readme, "README must identify finalized core deployment")
     ok("61999" in readme, "README must state target chain")
 
     print(f"PASS: {checks} preflight checks")

@@ -54,17 +54,13 @@ This package intentionally contains no alternate preview-network configuration.
 
 ## Current package status
 
-**Source hardening pending redeployment.** The addresses below are the prior
-pre-hardening Studionet deployment and are retained as historical evidence;
-they must not be presented as source-parity evidence for this checkout after
-the owner-gating changes. Redeploy both contracts on chain 61999, verify
-FINALIZED plus successful execution, then replace the historical values in the
-release evidence before resubmitting. The prior canonical core contract was
-`0x64DbC1429Cc698a59DA8331e44543c04c32cF0c1`; its bound demonstration
-consumer was `0x0F9BeEDe80427b93dd83e54b6588071E92a1a1e8`.
+**Finalized on Studionet from the hardened source.** The canonical core is
+`0x836226b0BC083384fee8F483C82Fa44605FE5f91`; its owner-gated demonstration
+consumer is `0x7AeD4D7F069A1247e14296aC89B75EdD1A5B0Ac7`. Both deployment transactions
+reached `FINALIZED`, `MAJORITY_AGREE`, with successful execution. RPC-retrieved
+deployment source exactly matches the local contract bytes and recorded hashes.
 
-See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the historical transaction
-evidence and the redeployment checklist.
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for transaction-level evidence.
 
 ## The mechanism
 
@@ -305,8 +301,9 @@ pytest tests/integration/ -v -s --network studionet
 
 Current-source local results: preflight `158` checks passed; Direct Mode `39`
 tests passed; both contracts passed the GenVM linter's three AST checks and
-semantic SDK validation. The `282.32s` live Studionet lifecycle result belongs
-to the historical pre-hardening deployment and must be rerun after redeployment.
+semantic SDK validation. The hardened canonical pair also passed a finalized
+live Studionet lifecycle covering allowed execution, permit consumption,
+same-session composition blocking, blocked execution, and a fresh-session control.
 
 ## Deployment
 
@@ -324,7 +321,7 @@ python scripts/deploy_consumer_studionet.py <CHAINHAZARD_ADDRESS>
 
 The deployment scripts use the active/unlocked GenLayer CLI account and never read or print a private key.
 
-Historical deployment and proof evidence is recorded in
+Canonical deployment and proof evidence is recorded in
 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) and [`SUBMISSION.md`](SUBMISSION.md).
 
 ## Repository layout
