@@ -2,6 +2,7 @@ import json
 
 CONTRACT = "contracts/chainhazard.py"
 EXECUTOR = "contracts/guarded_executor.py"
+SDK_VERSION = "v0.2.16"
 CLASSIFIER = r"You are the effect classifier for CHAINHAZARD"
 
 SENSITIVE = 1
@@ -55,7 +56,7 @@ def mock_mask(direct_vm, mask):
 
 def deploy_policy_session(direct_vm, direct_deploy, direct_alice):
     direct_vm.sender = direct_alice
-    contract = direct_deploy(CONTRACT)
+    contract = direct_deploy(CONTRACT, sdk_version=SDK_VERSION)
     policy_id = contract.create_policy(
         "support-composition-policy",
         SCOPE,
@@ -73,7 +74,7 @@ def propose(contract, session_id, ref, description, consumer):
 
 
 def test_capability_dictionary_is_stable(direct_vm, direct_deploy):
-    contract = direct_deploy(CONTRACT)
+    contract = direct_deploy(CONTRACT, sdk_version=SDK_VERSION)
     d = contract.get_capability_dictionary()
     assert d["SENSITIVE_ACCESS"] == SENSITIVE
     assert d["EXTERNAL_TRANSMIT"] == EXTERNAL
@@ -93,13 +94,13 @@ def test_policy_creation_exposes_rules(direct_vm, direct_deploy, direct_alice):
 
 
 def test_policy_rejects_mismatched_rule_arrays(direct_vm, direct_deploy):
-    contract = direct_deploy(CONTRACT)
+    contract = direct_deploy(CONTRACT, sdk_version=SDK_VERSION)
     with direct_vm.expect_revert("identical lengths"):
         contract.create_policy("xpolicy", SCOPE, ["one"], [1], [16, 32], ["reason"])
 
 
 def test_policy_rejects_unknown_capability_bit(direct_vm, direct_deploy):
-    contract = direct_deploy(CONTRACT)
+    contract = direct_deploy(CONTRACT, sdk_version=SDK_VERSION)
     with direct_vm.expect_revert("unsupported capability"):
         contract.create_policy(
             "xpolicy", SCOPE, ["one"], [1 << 30], [16], ["reason"]
@@ -107,7 +108,7 @@ def test_policy_rejects_unknown_capability_bit(direct_vm, direct_deploy):
 
 
 def test_policy_rejects_duplicate_rule_names(direct_vm, direct_deploy):
-    contract = direct_deploy(CONTRACT)
+    contract = direct_deploy(CONTRACT, sdk_version=SDK_VERSION)
     with direct_vm.expect_revert("duplicate rule name"):
         contract.create_policy(
             "xpolicy", SCOPE, ["same", "SAME"], [1, 2], [16, 16], ["a", "b"]
@@ -141,7 +142,7 @@ def test_only_consumer_owner_may_execute(
     direct_vm, direct_deploy, direct_alice, direct_bob
 ):
     direct_vm.sender = direct_alice
-    executor = direct_deploy(EXECUTOR, direct_alice)
+    executor = direct_deploy(EXECUTOR, direct_alice, sdk_version=SDK_VERSION)
 
     with direct_vm.prank(direct_bob):
         with direct_vm.expect_revert("only consumer owner may execute"):
