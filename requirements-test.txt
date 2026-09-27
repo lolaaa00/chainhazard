@@ -1,0 +1,3 @@
+# Direct-mode and Studionet integration tests.
+# This is the stable Studionet toolchain used by the 61999 reference repos.
+genlayer-test @ git+https://github.com/genlayerlabs/genlayer-testing-suite@v0.29.2
