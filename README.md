@@ -54,12 +54,17 @@ This package intentionally contains no alternate preview-network configuration.
 
 ## Current package status
 
-**Finalized on Studionet.** The canonical core contract is
+**Source hardening pending redeployment.** The addresses below are the prior
+pre-hardening Studionet deployment and are retained as historical evidence;
+they must not be presented as source-parity evidence for this checkout after
+the owner-gating changes. Redeploy both contracts on chain 61999, verify
+FINALIZED plus successful execution, then replace the historical values in the
+release evidence before resubmitting. The prior canonical core contract was
 `0x64DbC1429Cc698a59DA8331e44543c04c32cF0c1`; its bound demonstration
-consumer is `0x0F9BeEDe80427b93dd83e54b6588071E92a1a1e8`.
+consumer was `0x0F9BeEDe80427b93dd83e54b6588071E92a1a1e8`.
 
-Both deployments and the canonical lifecycle are FINALIZED on chain ID 61999.
-See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for transaction-level evidence.
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the historical transaction
+evidence and the redeployment checklist.
 
 ## The mechanism
 
@@ -286,9 +291,11 @@ pytest tests/direct/ -v -s
 
 ```bash
 pip install -r requirements.txt
-genvm-lint check contracts/chainhazard.py
-genvm-lint check contracts/guarded_executor.py
+python scripts/run_quality.py
 ```
+
+The quality runner selects the stable v0.2.16 SDK bundle that contains the
+contracts' pinned runner hash before executing full AST and semantic checks.
 
 ### Live Studionet integration
 
@@ -296,9 +303,10 @@ genvm-lint check contracts/guarded_executor.py
 pytest tests/integration/ -v -s --network studionet
 ```
 
-Measured final results: preflight `154` checks passed; Direct Mode `37` tests
-passed; both contracts passed the GenVM linter's three AST checks and semantic
-SDK validation; the expanded live Studionet lifecycle passed in `282.32s`.
+Current-source local results: preflight `158` checks passed; Direct Mode `39`
+tests passed; both contracts passed the GenVM linter's three AST checks and
+semantic SDK validation. The `282.32s` live Studionet lifecycle result belongs
+to the historical pre-hardening deployment and must be rerun after redeployment.
 
 ## Deployment
 
@@ -316,7 +324,7 @@ python scripts/deploy_consumer_studionet.py <CHAINHAZARD_ADDRESS>
 
 The deployment scripts use the active/unlocked GenLayer CLI account and never read or print a private key.
 
-Canonical deployment and proof evidence is recorded in
+Historical deployment and proof evidence is recorded in
 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) and [`SUBMISSION.md`](SUBMISSION.md).
 
 ## Repository layout

@@ -1,5 +1,12 @@
 # Deployment evidence
 
+> **Historical evidence notice (post-hardening):** the addresses and source
+> commit below predate the owner-gating changes in `contracts/chainhazard.py`
+> and `contracts/guarded_executor.py`. They are retained for audit history only.
+> A fresh Studionet deployment of both contracts is required before claiming
+> source parity or submitting this revision. Record the new addresses, FINALIZED
+> execution receipts, and exact source digests here after redeployment.
+
 All transaction states below were checked after finalization on 2026-09-27.
 
 ## Target

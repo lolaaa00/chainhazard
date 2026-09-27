@@ -1,6 +1,7 @@
 import json
 
 CONTRACT = "contracts/chainhazard.py"
+EXECUTOR = "contracts/guarded_executor.py"
 CLASSIFIER = r"You are the effect classifier for CHAINHAZARD"
 
 SENSITIVE = 1
@@ -126,6 +127,27 @@ def test_only_session_owner_may_propose(direct_vm, direct_deploy, direct_alice, 
     with direct_vm.prank(direct_bob):
         with direct_vm.expect_revert("only session owner"):
             propose(contract, session_id, "read-1", "Read private customer notes.", direct_bob)
+
+
+def test_only_session_owner_may_resolve(direct_vm, direct_deploy, direct_alice, direct_bob):
+    contract, _, session_id = deploy_policy_session(direct_vm, direct_deploy, direct_alice)
+    action_id = propose(contract, session_id, "read-1", "Read private customer notes.", direct_bob)
+    with direct_vm.prank(direct_bob):
+        with direct_vm.expect_revert("only session owner may resolve"):
+            contract.resolve_action(action_id)
+
+
+def test_only_consumer_owner_may_execute(
+    direct_vm, direct_deploy, direct_alice, direct_bob
+):
+    direct_vm.sender = direct_alice
+    executor = direct_deploy(EXECUTOR, direct_alice)
+
+    with direct_vm.prank(direct_bob):
+        with direct_vm.expect_revert("only consumer owner may execute"):
+            executor.execute(1, 1, "read-1")
+
+    assert executor.was_executed(1) is False
 
 
 def test_action_ref_is_unique_per_session(direct_vm, direct_deploy, direct_alice, direct_bob):

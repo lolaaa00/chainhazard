@@ -699,6 +699,8 @@ class ChainHazard(gl.Contract):
         if int(action.status) != ACTION_PENDING:
             raise gl.vm.UserError(f"{ERR}: action is already terminal")
         session = self._session(action.session_id)
+        if session.owner != gl.message.sender_address:
+            raise gl.vm.UserError(f"{ERR}: only session owner may resolve")
         if int(session.status) != SESSION_OPEN:
             raise gl.vm.UserError(f"{ERR}: session is closed")
         policy = self._policy(session.policy_id)

@@ -14,6 +14,12 @@ Standalone GenLayer Intelligent Contract
 
 ## Contract
 
+> The addresses below are the pre-hardening historical deployment. This
+> revision adds session-owner and consumer-owner gates, so redeploy both
+> contracts on Studionet and replace these values plus the validation evidence
+> before submitting. Do not claim source parity until the new deployments are
+> FINALIZED with successful execution.
+
 Core: `0x64DbC1429Cc698a59DA8331e44543c04c32cF0c1`
 
 Consumer: `0x0F9BeEDe80427b93dd83e54b6588071E92a1a1e8`
@@ -50,17 +56,21 @@ A downstream Intelligent Contract can call `is_permitted(...)` before execution.
 
 ## Validation evidence
 
+Local rows reflect this checkout. Every Studionet and deployment row below is
+historical evidence for commit `1f900b3`; rerun and replace those rows after
+redeploying this exact source.
+
 | Gate | Result |
 |---|---|
-| Zero-dependency preflight | PASS — 154 checks |
-| Direct Mode | PASS — 37 tests (latest run: 4.02s) |
+| Zero-dependency preflight | PASS — 158 checks |
+| Direct Mode | PASS — 39 tests |
 | GenVM lint | PASS — 3 AST checks plus semantic validation for each contract against cached stable v0.2.16 SDK |
-| Studionet integration | PASS — expanded lifecycle in 282.32s |
-| Core deployment | FINALIZED, execution SUCCESS |
-| Consumer deployment | FINALIZED, execution SUCCESS |
-| Cross-contract allowed path | FINALIZED; executor receipt recorded and permit became `CONSUMED` |
-| Composition hazard blocked path | FINALIZED; action 2 `BLOCKED`, rule `1:1`; executor attempt failed as expected |
-| Fresh-session control path | FINALIZED; action 3 `ALLOWED` with `EXTERNAL_TRANSMIT` mask 16 |
+| Studionet integration | HISTORICAL — expanded lifecycle passed in 282.32s |
+| Core deployment | HISTORICAL — FINALIZED, execution SUCCESS |
+| Consumer deployment | HISTORICAL — FINALIZED, execution SUCCESS |
+| Cross-contract allowed path | HISTORICAL — FINALIZED; executor receipt recorded and permit became `CONSUMED` |
+| Composition hazard blocked path | HISTORICAL — FINALIZED; action 2 `BLOCKED`, rule `1:1`; executor attempt failed as expected |
+| Fresh-session control path | HISTORICAL — FINALIZED; action 3 `ALLOWED` with `EXTERNAL_TRANSMIT` mask 16 |
 
 ## Finalized transaction evidence
 
@@ -74,7 +84,7 @@ Full hashes are recorded in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). Key evid
 - blocked execution rejected: `0x73402367d369865f67bb4899c65ad4302b85e57d428142c22ecf01be32d8414a`;
 - fresh-session public send allowed: `0xf9ad18caa21c9b1a6c3945a3b2457e1a23ddd02475f82368e080895cc21a43e8`.
 
-Deployed source commit: `1f900b3bc8ce44f89bf2163aaf3c6ec7c8a6db61`.
+Historical deployed source commit: `1f900b3bc8ce44f89bf2163aaf3c6ec7c8a6db61`.
 Official CLI source retrieval produced exact SHA-256 matches for both contracts.
 
 ## Explicit limitations

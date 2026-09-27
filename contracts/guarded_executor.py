@@ -59,11 +59,13 @@ class GuardedExecutor(gl.Contract):
     """Minimal consumer proving a ChainHazard permit can gate another IC."""
 
     chainhazard_address: Address
+    owner: Address
     executions: TreeMap[u256, ExecutionReceipt]
     execution_count: u256
 
     def __init__(self, chainhazard_address: Address):
         self.chainhazard_address = require_address(chainhazard_address)
+        self.owner = gl.message.sender_address
         self.execution_count = u256(0)
 
     @gl.public.write
@@ -73,6 +75,8 @@ class GuardedExecutor(gl.Contract):
         session_id: u256,
         action_ref: str,
     ) -> None:
+        if gl.message.sender_address != self.owner:
+            raise gl.vm.UserError("EXPECTED: only consumer owner may execute")
         if action_id in self.executions:
             raise gl.vm.UserError("EXPECTED: action already executed")
 
