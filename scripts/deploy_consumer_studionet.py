@@ -21,7 +21,7 @@ def verify_chain_id() -> None:
     request = urllib.request.Request(
         STUDIONET_RPC,
         data=json.dumps({"jsonrpc": "2.0", "method": "eth_chainId", "params": [], "id": 1}).encode(),
-        headers={"Content-Type": "application/json"},
+        headers={"Content-Type": "application/json", "User-Agent": "chainhazard-preflight/1.0"},
     )
     with urllib.request.urlopen(request, timeout=20) as response:
         payload = json.load(response)
