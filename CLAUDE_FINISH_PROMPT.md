@@ -248,7 +248,7 @@ Update:
 - `docs/DEPLOYMENT.md`
 - `SUBMISSION.md`
 
-Replace every `TBD` with real evidence.
+Replace every evidence placeholder with real evidence.
 
 Only add badges/test counts after they are actually measured.
 
@@ -265,7 +265,7 @@ Before pushing:
 - no secrets;
 - no stale addresses;
 - no fake tx hashes;
-- no `TBD` in submission-facing docs;
+- no unresolved evidence placeholders in submission-facing docs;
 - all links correct for `lolaaa00/chainhazard`;
 - all network references point to Studionet chain `61999`;
 - tests and documented counts agree;
@@ -275,7 +275,7 @@ Before pushing:
 
 The target repo will be `lolaaa00/chainhazard` after I create it.
 
-Do not push to `ometere123`.
+Push only to the required `lolaaa00/chainhazard` repository.
 
 If the repo does not yet exist/remotes are not configured, finish the local code first and tell me exactly what command or repository step I must do. Do not create some substitute repository under a different owner.
 

@@ -40,7 +40,7 @@ The agent must not say "done" merely because source files exist. It should only 
 - deployment transactions are FINALIZED;
 - source parity is checked against deployed code if the CLI supports it;
 - `docs/DEPLOYMENT.md` contains real addresses and tx hashes;
-- `SUBMISSION.md` contains no `TBD`;
+- `SUBMISSION.md` contains no unresolved evidence placeholders;
 - README badges/counts, if added, match actual evidence;
 - there are no references to any other network;
 - no private keys or secrets are committed.

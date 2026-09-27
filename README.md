@@ -54,9 +54,12 @@ This package intentionally contains no alternate preview-network configuration.
 
 ## Current package status
 
-**Not deployed yet.** The contract source, consumer, tests, deployment scripts and documentation are prepared for Lola's agent to validate and finish. No contract address, transaction hash, test count or runtime success is claimed until the package is run in her environment and on Studionet.
+**Finalized on Studionet.** The canonical core contract is
+`0x64DbC1429Cc698a59DA8331e44543c04c32cF0c1`; its bound demonstration
+consumer is `0x0F9BeEDe80427b93dd83e54b6588071E92a1a1e8`.
 
-See [`HANDOFF_TO_LOLA.md`](HANDOFF_TO_LOLA.md).
+Both deployments and the canonical lifecycle are FINALIZED on chain ID 61999.
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for transaction-level evidence.
 
 ## The mechanism
 
@@ -293,7 +296,9 @@ genvm-lint check contracts/guarded_executor.py
 pytest tests/integration/ -v -s --network studionet
 ```
 
-Do not record a passing count in this README until those commands have actually been executed in the final environment.
+Measured final results: preflight `154` checks passed; Direct Mode `37` tests
+passed; both contracts passed the GenVM linter's three AST checks and semantic
+SDK validation; the expanded live Studionet lifecycle passed in `282.32s`.
 
 ## Deployment
 
@@ -311,7 +316,8 @@ python scripts/deploy_consumer_studionet.py <CHAINHAZARD_ADDRESS>
 
 The deployment scripts use the active/unlocked GenLayer CLI account and never read or print a private key.
 
-After deployment, replace all `TBD` fields in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) and [`SUBMISSION.md`](SUBMISSION.md) with verified FINALIZED evidence only.
+Canonical deployment and proof evidence is recorded in
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) and [`SUBMISSION.md`](SUBMISSION.md).
 
 ## Repository layout
 
@@ -365,11 +371,7 @@ Its narrower primitive is:
 
 ## Target repository
 
-The intended repository is:
-
-`lolaaa00/chainhazard`
-
-The connected `ometere123` account is not the target repository for this package.
+[github.com/lolaaa00/chainhazard](https://github.com/lolaaa00/chainhazard)
 
 ## Licence
 
